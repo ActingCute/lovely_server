@@ -15,13 +15,13 @@
     },
     "basePath": "/v1",
     "paths": {
-        "/api/add": {
+        "/comment/add": {
             "post": {
                 "tags": [
-                    "api"
+                    "comment"
                 ],
                 "description": "Add Comment",
-                "operationId": "ApiController.Add Comment",
+                "operationId": "CommentController.Add Comment",
                 "parameters": [
                     {
                         "in": "body",
@@ -83,6 +83,9 @@
             "title": "Comment",
             "type": "object",
             "properties": {
+                "content": {
+                    "type": "string"
+                },
                 "delete_time": {
                     "type": "string",
                     "format": "datetime"
@@ -114,10 +117,6 @@
         }
     },
     "tags": [
-        {
-            "name": "api",
-            "description": "Operations about Api\n"
-        },
         {
             "name": "count",
             "description": "Operations about count\n"

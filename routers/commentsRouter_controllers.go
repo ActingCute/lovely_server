@@ -7,7 +7,7 @@ import (
 
 func init() {
 
-	beego.GlobalControllerRouter["server/controllers:ApiController"] = append(beego.GlobalControllerRouter["server/controllers:ApiController"],
+	beego.GlobalControllerRouter["lovely_server/controllers:CommentController"] = append(beego.GlobalControllerRouter["lovely_server/controllers:CommentController"],
 		beego.ControllerComments{
 			Method: "Add",
 			Router: `/add`,
@@ -15,7 +15,7 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
-	beego.GlobalControllerRouter["server/controllers:CountController"] = append(beego.GlobalControllerRouter["server/controllers:CountController"],
+	beego.GlobalControllerRouter["lovely_server/controllers:CountController"] = append(beego.GlobalControllerRouter["lovely_server/controllers:CountController"],
 		beego.ControllerComments{
 			Method: "Add",
 			Router: `/add`,

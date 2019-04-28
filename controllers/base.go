@@ -1,11 +1,11 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
-	"lovely_server/models"
-	helper "lovely_server/helper"
-	"strings"
 	"encoding/json"
+	"github.com/astaxie/beego"
+	helper "lovely_server/helper"
+	"lovely_server/models"
+	"strings"
 )
 
 type BaseController struct {
@@ -13,7 +13,7 @@ type BaseController struct {
 }
 
 func (this *BaseController) Prepare() {
-	helper.Debug("好无聊喔~",models.Domain)
+	helper.Debug("好无聊喔~", models.Domain)
 	this.NeedSQLConnentSuccess()
 }
 
@@ -35,7 +35,7 @@ func (this *BaseController) NeedSQLConnentSuccess() {
 //跨域
 func (this *BaseController) AllowCross() {
 	beego.Debug("AllowCross --- ")
-	this.Ctx.ResponseWriter.Header().Set("Access-Control-Allow-Origin", models.Domain)       //允许访问源
+	this.Ctx.ResponseWriter.Header().Set("Access-Control-Allow-Origin", models.Domain)                 //允许访问源
 	this.Ctx.ResponseWriter.Header().Set("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS")    //允许post访问
 	this.Ctx.ResponseWriter.Header().Set("Access-Control-Allow-Headers", "Content-Type,Authorization") //header的类型
 	this.Ctx.ResponseWriter.Header().Set("Access-Control-Max-Age", "1728000")
@@ -53,7 +53,7 @@ func (this *BaseController) SetReturnData(result helper.Status, message string, 
 //非空数据
 func (this *BaseController) NeedPostData(data ...interface{}) {
 	for _, v := range data {
-		switch  t := v.(type) {
+		switch t := v.(type) {
 		case string:
 			s := v.(string)
 			if s == "" {
@@ -96,4 +96,5 @@ func (this *BaseController) GetPostData(data interface{}) {
 
 func (this *BaseController) GetPostDataNotStop(data interface{}) {
 	json.Unmarshal(this.Ctx.Input.RequestBody, data)
+	helper.Debug(string(this.Ctx.Input.RequestBody))
 }

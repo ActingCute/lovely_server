@@ -11,9 +11,9 @@ var (
 )
 
 type Object struct {
-	ObjectId   string
-	Score      int64
-	PlayerName string
+	ObjectId   string `json:"object_id,omitempty"`
+	Score      int64  `json:"score,omitempty"`
+	PlayerName string `json:"player_name,omitempty"`
 }
 
 func init() {
@@ -50,4 +50,3 @@ func Update(ObjectId string, Score int64) (err error) {
 func Delete(ObjectId string) {
 	delete(Objects, ObjectId)
 }
-

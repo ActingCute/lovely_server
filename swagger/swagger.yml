@@ -11,12 +11,12 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 basePath: /v1
 paths:
-  /api/add:
+  /comment/add:
     post:
       tags:
-      - api
+      - comment
       description: Add Comment
-      operationId: ApiController.Add Comment
+      operationId: CommentController.Add Comment
       parameters:
       - in: body
         name: body
@@ -56,6 +56,8 @@ definitions:
     title: Comment
     type: object
     properties:
+      content:
+        type: string
       delete_time:
         type: string
         format: datetime
@@ -77,9 +79,6 @@ definitions:
         type: integer
         format: int64
 tags:
-- name: api
-  description: |
-    Operations about Api
 - name: count
   description: |
     Operations about count

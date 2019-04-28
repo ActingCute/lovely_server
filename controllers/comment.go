@@ -1,14 +1,14 @@
 package controllers
 
 import (
-	"lovely_server/models"
-	"github.com/astaxie/beego"
 	"lovely_server/helper"
+	"lovely_server/models"
+	"time"
 )
 
 // Operations about Comment
 type CommentController struct {
-	beego.Controller
+	BaseController
 }
 
 // @Title Add Comment
@@ -18,19 +18,23 @@ type CommentController struct {
 // @Failure 10001 {struct} helper.RestfulReturn
 // @Failure 403 body is empty
 // @router /add [post]
-func (this *ApiController) Add() {
+func (this *CommentController) Add() {
 	var comment models.Comment
 
-	this.NeedPostData(comment.UserId,comment.Url,comment.FatherId,comment.SonId)
-
 	this.GetPostDataNotStop(&comment)
-	
+
+	helper.Debug("comment --- ", comment)
+
+	this.NeedPostData(comment.UserId, comment.Url, comment.Content)
+
 	code := helper.SUCCESS
 
+	comment.UpdateTime = time.Now()
+
 	err := models.AddComment(comment)
-	
+
 	if err != nil {
 		code = helper.FAILED
 	}
-	this.SetReturnData(code,"love you",nil)
+	this.SetReturnData(code, "love you", err)
 }

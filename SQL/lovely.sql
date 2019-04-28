@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 2019-04-22 11:23:21
+-- Generation Time: 2019-04-28 04:50:26
 -- 服务器版本： 5.5.56
 -- PHP Version: 5.6.28
 
@@ -32,8 +32,9 @@ CREATE TABLE `comment` (
   `id` int(64) NOT NULL COMMENT '自增ID',
   `user_id` int(64) NOT NULL COMMENT '用户ID',
   `url` varchar(255) NOT NULL COMMENT '页面url',
-  `father_id` int(64) NOT NULL DEFAULT '0' COMMENT '父级ID',
-  `son_id` int(64) NOT NULL DEFAULT '0' COMMENT '子级ID',
+  `father_id` int(64) DEFAULT '0' COMMENT '父级ID',
+  `son_id` int(64) DEFAULT '0' COMMENT '子级ID',
+  `content` text NOT NULL COMMENT '评论内容',
   `update_time` datetime NOT NULL COMMENT '评论时间',
   `delete_time` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
