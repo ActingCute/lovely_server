@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.1
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: 2019-04-28 07:42:53
--- 服务器版本： 5.5.56
+-- Host: 127.0.0.1
+-- Generation Time: 2019-04-28 18:32:48
+-- 服务器版本： 10.1.19-MariaDB
 -- PHP Version: 5.6.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -68,10 +66,10 @@ CREATE TABLE `count` (
 
 CREATE TABLE `user` (
   `id` int(64) NOT NULL COMMENT '自增ID',
-  `website` varchar(255) NOT NULL COMMENT '网站',
-  `email` varchar(255) NOT NULL COMMENT '邮箱',
+  `website` varchar(255) DEFAULT NULL COMMENT '网站',
+  `email` varchar(255) DEFAULT NULL COMMENT '邮箱',
   `name` varchar(255) NOT NULL COMMENT '名字',
-  `delete_time` int(11) DEFAULT NULL COMMENT '删除时间'
+  `delete_time` datetime DEFAULT NULL COMMENT '删除时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -94,7 +92,8 @@ ALTER TABLE `count`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- 在导出的表使用AUTO_INCREMENT
@@ -114,8 +113,7 @@ ALTER TABLE `count`
 -- 使用表AUTO_INCREMENT `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '自增ID';COMMIT;
-
+  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '自增ID';
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

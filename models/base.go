@@ -33,7 +33,6 @@ func init() {
 	daTable = If(len(daTable) < 1, "falcon_portal", daTable).(string)
 	dbPort = If(len(dbPort) < 1, "3306", dbPort).(string)
 	dbUser = If(len(dbUser) < 1, "root", dbUser).(string)
-	dbPassword = If(len(dbPassword) < 1, "admin", dbPassword).(string)
 	dataSourceName := dbUser + ":" + dbPassword + "@tcp(" + dbHost + ":" + dbPort + ")/" + daTable + "?charset=utf8&parseTime=true&loc=Local"
 	go connentDB(dataSourceName)
 }

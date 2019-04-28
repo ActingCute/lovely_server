@@ -46,13 +46,13 @@
                 }
             }
         },
-        "/count/add": {
+        "/comment/get": {
             "post": {
                 "tags": [
-                    "count"
+                    "comment"
                 ],
-                "description": "Add Post Count",
-                "operationId": "CountController.Add Comment",
+                "description": "Get Post Comment",
+                "operationId": "CommentController.Get Comment",
                 "parameters": [
                     {
                         "in": "body",
@@ -76,6 +76,68 @@
                     }
                 }
             }
+        },
+        "/count/add": {
+            "post": {
+                "tags": [
+                    "count"
+                ],
+                "description": "Add Post Count",
+                "operationId": "CountController.Add Count",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for Count content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Count"
+                        }
+                    }
+                ],
+                "responses": {
+                    "10000": {
+                        "description": "{struct} helper.RestfulReturn"
+                    },
+                    "10001": {
+                        "description": "{struct} helper.RestfulReturn"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/count/get": {
+            "post": {
+                "tags": [
+                    "count"
+                ],
+                "description": "Get Post Count",
+                "operationId": "CountController.Get Count",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for Count content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Count"
+                        }
+                    }
+                ],
+                "responses": {
+                    "10000": {
+                        "description": "{struct} helper.RestfulReturn"
+                    },
+                    "10001": {
+                        "description": "{struct} helper.RestfulReturn"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -83,35 +145,56 @@
             "title": "Comment",
             "type": "object",
             "properties": {
-                "Content": {
+                "content": {
                     "type": "string"
                 },
-                "DeleteTime": {
+                "delete_time": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "string"
                 },
-                "FatherId": {
+                "father_id": {
                     "type": "integer",
                     "format": "int64"
                 },
-                "Id": {
+                "id": {
                     "type": "integer",
                     "format": "int64"
                 },
-                "SonId": {
+                "son_id": {
                     "type": "integer",
                     "format": "int64"
                 },
-                "UpdateTime": {
+                "update_time": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "string"
                 },
-                "Url": {
+                "url": {
                     "type": "string"
                 },
-                "UserId": {
+                "user_id": {
                     "type": "integer",
                     "format": "int64"
+                }
+            }
+        },
+        "models.Count": {
+            "title": "Count",
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "delete_time": {
+                    "type": "string",
+                    "format": "string"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "url": {
+                    "type": "string"
                 }
             }
         }

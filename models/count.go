@@ -30,3 +30,9 @@ func GetCountByUrl(url string) (has bool, count Count, err error) {
 	has, err = db.Table("count").Where("url =?", url).Get(&count)
 	return has, count, err
 }
+
+func GetCountsByUrl(url string) ([]Count, error) {
+	counts := make([]Count, 0)
+	err := db.Table("count").Where("url =?", url).Find(&counts)
+	return counts, err
+}

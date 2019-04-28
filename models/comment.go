@@ -15,6 +15,12 @@ type Comment struct {
 	DeleteTime time.Time `xorm:"DATETIME" json:"delete_time,omitempty"`
 }
 
+func GetCommentsByUrl(url string) ([]Comment, error) {
+	comments := make([]Comment, 0)
+	err := db.Table("comment").Where("url =?", url).Find(&comments)
+	return comments, err
+}
+
 func AddComment(comment Comment) error {
 	return Insert(comment)
 }

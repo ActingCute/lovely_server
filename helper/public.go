@@ -1,12 +1,12 @@
 package helper
 
 import (
-	"runtime"
-	"strings"
 	"fmt"
 	"github.com/astaxie/beego"
-	"strconv"
 	"os"
+	"runtime"
+	"strconv"
+	"strings"
 )
 
 var (
@@ -14,7 +14,7 @@ var (
 )
 
 //error
-func Error(err ... interface{}) bool {
+func Error(err ...interface{}) bool {
 	if err[0] != nil {
 		_, files, line, ok := runtime.Caller(1)
 		if !ok {
@@ -35,7 +35,7 @@ func Error(err ... interface{}) bool {
 }
 
 //debug
-func Debug(debug ... interface{}) {
+func Debug(debug ...interface{}) {
 	if IsDebug {
 		_, files, line, ok := runtime.Caller(1)
 		if !ok {
