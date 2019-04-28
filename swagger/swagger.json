@@ -1,0 +1,130 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "beego Test API",
+        "description": "beego has a very cool tools to autogenerate documents for your API",
+        "version": "1.0.0",
+        "termsOfService": "http://beego.me/",
+        "contact": {
+            "email": "astaxie@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "basePath": "/v1",
+    "paths": {
+        "/api/add": {
+            "post": {
+                "tags": [
+                    "api"
+                ],
+                "description": "Add Comment",
+                "operationId": "ApiController.Add Comment",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for Comment content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Comment"
+                        }
+                    }
+                ],
+                "responses": {
+                    "10000": {
+                        "description": "{struct} helper.RestfulReturn"
+                    },
+                    "10001": {
+                        "description": "{struct} helper.RestfulReturn"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/count/add": {
+            "post": {
+                "tags": [
+                    "count"
+                ],
+                "description": "Add Post Count",
+                "operationId": "CountController.Add Comment",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for Comment content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Comment"
+                        }
+                    }
+                ],
+                "responses": {
+                    "10000": {
+                        "description": "{struct} helper.RestfulReturn"
+                    },
+                    "10001": {
+                        "description": "{struct} helper.RestfulReturn"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Comment": {
+            "title": "Comment",
+            "type": "object",
+            "properties": {
+                "delete_time": {
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "father_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "son_id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "update_time": {
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "api",
+            "description": "Operations about Api\n"
+        },
+        {
+            "name": "count",
+            "description": "Operations about count\n"
+        },
+        {
+            "name": "comment",
+            "description": "Operations about Comment\n"
+        }
+    ]
+}
