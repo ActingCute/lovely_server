@@ -40,3 +40,7 @@
     go install github.com/golang/lint/golint
 
     go install github.com/cweill/gotests/gotests    
+
+    单独处理golint,golint的源码位于https://github.com/golang/lint
+    进入%GOPATH%\src\golang.org\x后执行git clone https://github.com/golang/lint下载golint需要的源码
+    进入到%GOPATH%下，执行go install golang.org\x\lint

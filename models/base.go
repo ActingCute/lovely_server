@@ -1,27 +1,26 @@
 package models
 
 import (
-	helper "lovely_server/helper"
 	"github.com/astaxie/beego"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
-	"time"
+	helper "lovely_server/helper"
 	"os"
+	"time"
 )
 
 var (
-	ShowSql         bool     //是否显示sql日志
-	db              *xorm.Engine
-	ds              *xorm.Session
-	DBOk            bool    //数据库连接是否正常
-	Domain          string
+	ShowSql bool //是否显示sql日志
+	db      *xorm.Engine
+	ds      *xorm.Session
+	DBOk    bool //数据库连接是否正常
+	Domain  string
 )
-
 
 func init() {
 	//web
 	Domain = GetAppConf("web::domain")
-	helper.Debug("Domain :",Domain)
+	helper.Debug("Domain :", Domain)
 	//数据库
 	dbHost := GetAppConf("db::host")
 	daTable := GetAppConf("db::table")
@@ -79,7 +78,7 @@ func connentDB(dataSourceName string) {
 			DBOk = true
 			//InitDB()
 			if ShowSql {
-				initDBLogger()
+				//initDBLogger()
 			} else {
 				beego.Info("sql 日志已经关闭")
 			}
@@ -91,7 +90,7 @@ func connentDB(dataSourceName string) {
 func initDBLogger() {
 	t1 := time.NewTimer(time.Second * 1)
 	logpath := "./Log/sql.log"
-	go func(){
+	go func() {
 		for {
 			select {
 			case <-t1.C:
@@ -111,9 +110,9 @@ func initDBLogger() {
 					t1.Reset(time.Second * 5)
 				}
 			}
-		}	
+		}
 	}()
-	
+
 }
 
 func If(condition bool, trueVal, falseVal interface{}) interface{} {
@@ -122,7 +121,6 @@ func If(condition bool, trueVal, falseVal interface{}) interface{} {
 	}
 	return falseVal
 }
-
 
 func GetAppConf(name string) string {
 	return beego.AppConfig.String(name)
@@ -156,6 +154,13 @@ func GetAppConfBool(name string) bool {
 
 func Insert(data interface{}) error {
 	_, err := db.Omit("delete_time").Insert(data)
+	helper.Error(err)
+	return err
+}
+
+func Update(data interface{}, Where string, whereData []interface{}, cols ...string) error {
+	helper.Debug("whereData -- ", whereData)
+	_, err := db.Where(Where, whereData...).Cols(cols...).Update(data)
 	helper.Error(err)
 	return err
 }

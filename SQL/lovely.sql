@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 2019-04-28 04:50:26
+-- Generation Time: 2019-04-28 07:42:53
 -- 服务器版本： 5.5.56
 -- PHP Version: 5.6.28
 
@@ -39,6 +39,14 @@ CREATE TABLE `comment` (
   `delete_time` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- 转存表中的数据 `comment`
+--
+
+INSERT INTO `comment` (`id`, `user_id`, `url`, `father_id`, `son_id`, `content`, `update_time`, `delete_time`) VALUES
+(1, 1, '/1111', 0, 0, '爱你哟', '2019-04-28 11:40:35', NULL),
+(2, 1, '/1111', 0, 0, '爱你哟', '2019-04-28 13:37:08', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -47,7 +55,7 @@ CREATE TABLE `comment` (
 
 CREATE TABLE `count` (
   `id` int(64) NOT NULL COMMENT '自增ID',
-  `url` int(64) NOT NULL COMMENT '页面url',
+  `url` varchar(255) NOT NULL COMMENT '页面url',
   `count` int(64) NOT NULL COMMENT '阅读数',
   `delete_time` datetime DEFAULT NULL COMMENT '删除时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -96,7 +104,7 @@ ALTER TABLE `user`
 -- 使用表AUTO_INCREMENT `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '自增ID';
+  MODIFY `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '自增ID', AUTO_INCREMENT=3;
 --
 -- 使用表AUTO_INCREMENT `count`
 --

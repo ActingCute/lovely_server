@@ -56,26 +56,26 @@ definitions:
     title: Comment
     type: object
     properties:
-      content:
+      Content:
         type: string
-      delete_time:
-        type: string
-        format: datetime
-      father_id:
-        type: integer
-        format: int64
-      id:
-        type: integer
-        format: int64
-      son_id:
-        type: integer
-        format: int64
-      update_time:
+      DeleteTime:
         type: string
         format: datetime
-      url:
+      FatherId:
+        type: integer
+        format: int64
+      Id:
+        type: integer
+        format: int64
+      SonId:
+        type: integer
+        format: int64
+      UpdateTime:
         type: string
-      user_id:
+        format: datetime
+      Url:
+        type: string
+      UserId:
         type: integer
         format: int64
 tags:

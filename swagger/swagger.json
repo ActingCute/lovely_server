@@ -83,33 +83,33 @@
             "title": "Comment",
             "type": "object",
             "properties": {
-                "content": {
+                "Content": {
                     "type": "string"
                 },
-                "delete_time": {
+                "DeleteTime": {
                     "type": "string",
                     "format": "datetime"
                 },
-                "father_id": {
+                "FatherId": {
                     "type": "integer",
                     "format": "int64"
                 },
-                "id": {
+                "Id": {
                     "type": "integer",
                     "format": "int64"
                 },
-                "son_id": {
+                "SonId": {
                     "type": "integer",
                     "format": "int64"
                 },
-                "update_time": {
+                "UpdateTime": {
                     "type": "string",
                     "format": "datetime"
                 },
-                "url": {
+                "Url": {
                     "type": "string"
                 },
-                "user_id": {
+                "UserId": {
                     "type": "integer",
                     "format": "int64"
                 }

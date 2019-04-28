@@ -23,8 +23,6 @@ func (this *CommentController) Add() {
 
 	this.GetPostDataNotStop(&comment)
 
-	helper.Debug("comment --- ", comment)
-
 	this.NeedPostData(comment.UserId, comment.Url, comment.Content)
 
 	code := helper.SUCCESS
