@@ -5,7 +5,9 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
 	helper "lovely_server/helper"
+	"net"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -16,6 +18,30 @@ var (
 	DBOk    bool //数据库连接是否正常
 	Domain  string
 )
+
+var (
+	App   *app   = new(app)
+	QiNiu *qiniu = new(qiniu)
+)
+
+type qiniu struct {
+	Enable            bool
+	AccessKey         string
+	SecretKey         string
+	Space             string
+	Domain            string
+	Videoautochange   bool
+	VideoTypeToChange string
+	Pipeline          string
+	NotifyURL         string
+	Action            string
+}
+
+type app struct {
+	Runmode string
+	IsDebug bool
+	ApiUrl  string
+}
 
 func init() {
 	//web
@@ -35,6 +61,26 @@ func init() {
 	dbUser = If(len(dbUser) < 1, "root", dbUser).(string)
 	dataSourceName := dbUser + ":" + dbPassword + "@tcp(" + dbHost + ":" + dbPort + ")/" + daTable + "?charset=utf8&parseTime=true&loc=Local"
 	go connentDB(dataSourceName)
+	//qiniu
+	QiNiu.AccessKey = beego.AppConfig.String("qiniu::accessKey")
+	QiNiu.SecretKey = beego.AppConfig.String("qiniu::secretKey")
+	QiNiu.Space = beego.AppConfig.String("qiniu::space")
+	QiNiu.Domain = beego.AppConfig.String("qiniu::domain")
+	QiNiu.VideoTypeToChange = beego.AppConfig.String("qiniu::videotypetochange")
+	QiNiu.Pipeline = beego.AppConfig.String("qiniu::pipeline")
+	QiNiu.NotifyURL = beego.AppConfig.String("qiniu::notifyurl")
+	QiNiu.Action = beego.AppConfig.String("qiniu::action")
+	helper.Debug("QiNiu - ", QiNiu)
+
+	//app
+	// App Config Init
+	App.Runmode = beego.AppConfig.String("runmode")
+	if beego.AppConfig.String("isdebug") == "true" {
+		App.IsDebug = true
+	} else {
+		App.IsDebug = false
+	}
+	App.ApiUrl = "http://" + GetIp() + ":" + strconv.Itoa(beego.BConfig.Listen.HTTPPort)
 }
 
 func connentDB(dataSourceName string) {
@@ -162,4 +208,24 @@ func Update(data interface{}, Where string, whereData []interface{}, cols ...str
 	_, err := db.Where(Where, whereData...).Cols(cols...).Update(data)
 	helper.Error(err)
 	return err
+}
+
+//获取本地IP
+func GetIp() string {
+	if App.IsDebug {
+		return "127.0.0.1"
+	}
+	addrs, err := net.InterfaceAddrs()
+	if err != nil {
+		return "127.0.0.1"
+	}
+	for _, address := range addrs {
+		// 检查ip地址判断是否回环地址
+		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+			if ipnet.IP.To4() != nil {
+				return ipnet.IP.String()
+			}
+		}
+	}
+	return "127.0.0.1"
 }

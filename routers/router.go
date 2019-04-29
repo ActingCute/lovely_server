@@ -35,6 +35,11 @@ func init() {
 				&controllers.CommentController{},
 			),
 		),
+		beego.NSNamespace("/qiniu",
+			beego.NSInclude(
+				&controllers.QiniuController{},
+			),
+		),
 	)
 	beego.Debug("models.Domain", models.Domain)
 	beego.AddNamespace(ns)

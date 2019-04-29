@@ -39,4 +39,20 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["lovely_server/controllers:QiniuController"] = append(beego.GlobalControllerRouter["lovely_server/controllers:QiniuController"],
+		beego.ControllerComments{
+			Method: "UptokenKey",
+			Router: `/uptoken_key`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["lovely_server/controllers:QiniuController"] = append(beego.GlobalControllerRouter["lovely_server/controllers:QiniuController"],
+		beego.ControllerComments{
+			Method: "UptokenWeb",
+			Router: `/uptoken_web`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 }
