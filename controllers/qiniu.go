@@ -1,11 +1,11 @@
 package controllers
 
 import (
+	"fmt"
 	"strings"
 	"time"
 
 	"github.com/qiniu/api.v7/auth/qbox"
-
 	"github.com/qiniu/api.v7/storage"
 
 	"lovely_server/helper"
@@ -50,6 +50,15 @@ type QiniuController struct {
 	BaseController
 }
 
+// 自定义返回值结构体
+type MyPutRet struct {
+	Key    string
+	Hash   string
+	Fsize  int
+	Bucket string
+	Name   string
+}
+
 func init() {
 	QINIU_QBOX_MAC = qbox.NewMac(models.QiNiu.AccessKey, models.QiNiu.SecretKey)
 }
@@ -86,10 +95,13 @@ func (this *QiniuController) UptokenKey() {
 	}
 
 	timeStr := time.Now().Format("2006-01-02 15:04:05")
-	timeStr = strings.Replace(timeStr, " ", "_", -1)
-	timeStr = strings.Replace(timeStr, ":", "-", -1)
+	timeStr = strings.Replace(timeStr, "-", "", -1)
+	timeStr = strings.Replace(timeStr, " ", "", -1)
+	timeStr = strings.Replace(timeStr, ":", "", -1)
 
 	key := "qiniu/upload/" + timeStr + "/" + fileName
+
+	helper.Debug("key ---", key)
 
 	//先判断是否开启了七牛上传，否就上传到本地咯
 	// if !models.QiNiu.Enable {
@@ -102,7 +114,7 @@ func (this *QiniuController) UptokenKey() {
 	// }
 
 	resultData["key"] = key
-	resultData["token"] = UptokenWithKey(models.QiNiu.Space, key, 3600*24) // 3600是一小时。
+	resultData["token"] = NewUptokenWithKey(models.QiNiu.Space, key, 3600*24) // 3600是一小时。
 	resultData["action"] = models.QiNiu.Action
 
 	this.SetReturnData(helper.SUCCESS, "ok", resultData)
@@ -122,10 +134,19 @@ func Uptoken(bucketName string) string {
 
 func UptokenWithKey(bucket, key string, expires uint32) string {
 	putPolicy := storage.PutPolicy{
-		Scope: bucket + ":" + key,
+		Scope: fmt.Sprintf("%s:%s", bucket, key),
 	}
-
+	helper.Debug("scope --- ", fmt.Sprintf("%s:%s", bucket, key))
 	putPolicy.Expires = 60 * 60 * 24 // token过期时间设置为1天.
 
+	return putPolicy.UploadToken(QINIU_QBOX_MAC)
+}
+
+func NewUptokenWithKey(bucket, key string, expires uint32) string {
+	// 需要覆盖的文件名
+	keyToOverwrite := "qiniu.jpg"
+	putPolicy := storage.PutPolicy{
+		Scope: fmt.Sprintf("%s:%s", bucket, keyToOverwrite),
+	}
 	return putPolicy.UploadToken(QINIU_QBOX_MAC)
 }

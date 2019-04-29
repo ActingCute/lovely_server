@@ -91,31 +91,57 @@ paths:
           description: '{struct} helper.RestfulReturn'
         "10001":
           description: '{struct} helper.RestfulReturn'
+  /qiniu/uptoken_key:
+    get:
+      tags:
+      - qiniu
+      description: Get Uptoken Key
+      operationId: QiniuController.Get Uptoken Key
+      responses:
+        "403":
+          description: body is empty
+        "10000":
+          description: '{struct} helper.RestfulReturn'
+        "10001":
+          description: '{struct} helper.RestfulReturn'
+  /qiniu/uptoken_web:
+    get:
+      tags:
+      - qiniu
+      description: Get Uptoken Web
+      operationId: QiniuController.Get Uptoken Web
+      responses:
+        "403":
+          description: body is empty
+        "10000":
+          description: '{struct} helper.RestfulReturn'
+        "10001":
+          description: '{struct} helper.RestfulReturn'
 definitions:
   models.Comment:
     title: Comment
     type: object
     properties:
-      Content:
+      content:
         type: string
-      DeleteTime:
+      delete_time:
         type: string
-        format: datetime
-      FatherId:
+        format: string
+      father_id:
         type: integer
         format: int64
-      Id:
+      id:
         type: integer
         format: int64
-      SonId:
+      son_id:
         type: integer
         format: int64
-      UpdateTime:
+      update_time:
         type: string
-        format: datetime
-      Url:
+        format: string
+      url:
         type: string
-      UserId:
+      user_id:
         type: integer
         format: int64
   models.Count:
@@ -127,7 +153,7 @@ definitions:
         format: int64
       delete_time:
         type: string
-        format: datetime
+        format: string
       id:
         type: integer
         format: int64
