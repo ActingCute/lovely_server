@@ -34,7 +34,7 @@ func (this *BaseController) NeedSQLConnentSuccess() {
 
 //跨域
 func (this *BaseController) AllowCross() {
-	beego.Debug("AllowCross --- ")
+	beego.Debug("AllowCross --- ", models.Domain)
 	this.Ctx.ResponseWriter.Header().Set("Access-Control-Allow-Origin", models.Domain)                 //允许访问源
 	this.Ctx.ResponseWriter.Header().Set("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS")    //允许post访问
 	this.Ctx.ResponseWriter.Header().Set("Access-Control-Allow-Headers", "Content-Type,Authorization") //header的类型

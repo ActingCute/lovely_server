@@ -8,8 +8,10 @@
 package routers
 
 import (
-	"lovely_server/controllers"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/plugins/cors"
+	"lovely_server/controllers"
+	"lovely_server/models"
 )
 
 func init() {
@@ -19,6 +21,10 @@ func init() {
 		// 		&controllers.ApiController{},
 		// 	),
 		// ),
+		beego.NSNamespace("*",
+			//Options用于跨域复杂请求预检
+			beego.NSRouter("/*", &controllers.BaseController{}, "options:Options"),
+		),
 		beego.NSNamespace("/count",
 			beego.NSInclude(
 				&controllers.CountController{},
@@ -30,5 +36,13 @@ func init() {
 			),
 		),
 	)
+	beego.Debug("models.Domain", models.Domain)
 	beego.AddNamespace(ns)
+	beego.InsertFilter(models.Domain, beego.BeforeRouter, cors.Allow(&cors.Options{
+		AllowAllOrigins:  true,
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Content-Type"},
+		ExposeHeaders:    []string{"Content-Length", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Content-Type"},
+		AllowCredentials: true,
+	}))
 }

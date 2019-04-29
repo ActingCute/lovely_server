@@ -96,26 +96,26 @@ definitions:
     title: Comment
     type: object
     properties:
-      content:
+      Content:
         type: string
-      delete_time:
+      DeleteTime:
         type: string
-        format: string
-      father_id:
+        format: datetime
+      FatherId:
         type: integer
         format: int64
-      id:
+      Id:
         type: integer
         format: int64
-      son_id:
+      SonId:
         type: integer
         format: int64
-      update_time:
+      UpdateTime:
         type: string
-        format: string
-      url:
+        format: datetime
+      Url:
         type: string
-      user_id:
+      UserId:
         type: integer
         format: int64
   models.Count:
@@ -127,7 +127,7 @@ definitions:
         format: int64
       delete_time:
         type: string
-        format: string
+        format: datetime
       id:
         type: integer
         format: int64
