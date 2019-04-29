@@ -1,3 +1,7 @@
+### 说明
+
+    还在开发中，请期待~
+
 # lovely server
 
     vue-lovely server
@@ -44,3 +48,4 @@
     单独处理golint,golint的源码位于https://github.com/golang/lint
     进入%GOPATH%\src\golang.org\x后执行git clone https://github.com/golang/lint下载golint需要的源码
     进入到%GOPATH%下，执行go install golang.org\x\lint
+
