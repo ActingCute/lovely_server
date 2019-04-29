@@ -16,13 +16,15 @@ type Comment struct {
 }
 
 type CommentsExtend struct {
-	User    `xorm:"extends" json:"user,omitempty"`
-	Comment `xorm:"extends" json:"comment,omitempty"`
+	User    User    `xorm:"extends" json:"user"`
+	Comment Comment `xorm:"extends" json:"comment"`
 }
+
+const comment_user_cols = "user.id,user.name,user.website,user.email,comment.id,comment.user_id,comment.father_id,comment.son_id,comment.content,comment.update_time"
 
 func GetCommentsByUrl(url string) ([]CommentsExtend, error) {
 	comments := make([]CommentsExtend, 0)
-	err := db.Table("comment").Join("LEFT", "user", "user.id=comment.user_id").Where("url =?", url).Find(&comments)
+	err := db.Table("comment").Join("RIGHT", "user", "user.id=comment.user_id").Cols(comment_user_cols).Where("url =?", url).Find(&comments)
 	return comments, err
 }
 
