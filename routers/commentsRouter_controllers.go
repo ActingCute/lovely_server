@@ -33,6 +33,14 @@ func init() {
 
 	beego.GlobalControllerRouter["lovely_server/controllers:CountController"] = append(beego.GlobalControllerRouter["lovely_server/controllers:CountController"],
 		beego.ControllerComments{
+			Method: "AddAndGet",
+			Router: `/add_get`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["lovely_server/controllers:CountController"] = append(beego.GlobalControllerRouter["lovely_server/controllers:CountController"],
+		beego.ControllerComments{
 			Method: "Get",
 			Router: `/get`,
 			AllowHTTPMethods: []string{"post"},

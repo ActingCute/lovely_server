@@ -108,6 +108,37 @@
                 }
             }
         },
+        "/count/add_get": {
+            "post": {
+                "tags": [
+                    "count"
+                ],
+                "description": "获取浏览数和添加浏览数",
+                "operationId": "CountController.Add And Get Count",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for Count content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Count"
+                        }
+                    }
+                ],
+                "responses": {
+                    "10000": {
+                        "description": "{struct} helper.RestfulReturn"
+                    },
+                    "10001": {
+                        "description": "{struct} helper.RestfulReturn"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
         "/count/get": {
             "post": {
                 "tags": [
@@ -185,33 +216,33 @@
             "title": "Comment",
             "type": "object",
             "properties": {
-                "commid": {
-                    "type": "integer",
-                    "format": "int64"
-                },
-                "content": {
+                "Content": {
                     "type": "string"
                 },
-                "delete_time": {
+                "DeleteTime": {
                     "type": "string",
                     "format": "datetime"
                 },
-                "father_id": {
+                "FatherId": {
                     "type": "integer",
                     "format": "int64"
                 },
-                "son_id": {
+                "Id": {
                     "type": "integer",
                     "format": "int64"
                 },
-                "update_time": {
+                "SonId": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "UpdateTime": {
                     "type": "string",
                     "format": "datetime"
                 },
-                "url": {
+                "Url": {
                     "type": "string"
                 },
-                "user_id": {
+                "UserId": {
                     "type": "integer",
                     "format": "int64"
                 }
@@ -221,19 +252,19 @@
             "title": "Count",
             "type": "object",
             "properties": {
-                "count": {
+                "Count": {
                     "type": "integer",
                     "format": "int64"
                 },
-                "delete_time": {
+                "DeleteTime": {
                     "type": "string",
                     "format": "datetime"
                 },
-                "id": {
+                "Id": {
                     "type": "integer",
                     "format": "int64"
                 },
-                "url": {
+                "Url": {
                     "type": "string"
                 }
             }
