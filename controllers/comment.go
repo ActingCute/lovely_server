@@ -50,8 +50,6 @@ func (this *CommentController) Add() {
 
 	this.NeedPostData(user.Name)
 
-	helper.Debug("11111111111")
-
 	err := models.AddUser(&user)
 
 	if helper.Error(err) {
@@ -62,16 +60,21 @@ func (this *CommentController) Add() {
 	this.GetPostDataNotStop(&comment)
 
 	this.NeedPostData(comment.Url, comment.Content)
-	helper.Debug("222222222222")
-	code := helper.SUCCESS
 
 	comment.UpdateTime = time.Now()
 	comment.UserId = user.Id
 
-	err = models.AddComment(comment)
+	err = models.AddComment(&comment)
 
+	code := helper.SUCCESS
 	if err != nil {
 		code = helper.FAILED
+	} else {
+		data := make(map[string]interface{})
+		data["user"] = user
+		data["comment"] = comment
+		this.SetReturnData(code, "love you", data)
+		return
 	}
 	this.SetReturnData(code, "love you", err)
 }

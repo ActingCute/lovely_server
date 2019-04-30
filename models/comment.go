@@ -5,7 +5,7 @@ import (
 )
 
 type Comment struct {
-	Id         int64     `xorm:"not null pk autoincr INT(64)" json:"id,omitempty"`
+	Id         int64     `xorm:"not null pk autoincr INT(64)" json:"commid,omitempty"`
 	UserId     int64     `xorm:"not null INT(64)" json:"user_id,omitempty"`
 	Url        string    `xorm:"not null VARCHAR(255)" json:"url,omitempty"`
 	FatherId   int64     `xorm:"default 0 INT(64)" json:"father_id,omitempty"`
@@ -28,6 +28,6 @@ func GetCommentsByUrl(url string) ([]CommentsExtend, error) {
 	return comments, err
 }
 
-func AddComment(comment Comment) error {
+func AddComment(comment *Comment) error {
 	return Insert(comment)
 }

@@ -122,15 +122,15 @@ definitions:
     title: Comment
     type: object
     properties:
+      commid:
+        type: integer
+        format: int64
       content:
         type: string
       delete_time:
         type: string
-        format: string
+        format: datetime
       father_id:
-        type: integer
-        format: int64
-      id:
         type: integer
         format: int64
       son_id:
@@ -138,7 +138,7 @@ definitions:
         format: int64
       update_time:
         type: string
-        format: string
+        format: datetime
       url:
         type: string
       user_id:
@@ -153,7 +153,7 @@ definitions:
         format: int64
       delete_time:
         type: string
-        format: string
+        format: datetime
       id:
         type: integer
         format: int64

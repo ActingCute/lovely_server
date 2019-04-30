@@ -6,7 +6,7 @@ import (
 )
 
 type User struct {
-	Id         int64     `xorm:"not null pk autoincr INT(64)" json:"id,omitempty"`
+	Id         int64     `xorm:"not null pk autoincr INT(64)" json:"uid,omitempty"`
 	Website    string    `xorm:"VARCHAR(255)" json:"website,omitempty"`
 	Email      string    `xorm:"VARCHAR(255)" json:"email,omitempty"`
 	Name       string    `xorm:"not null comment('名字') unique VARCHAR(255)" json:"name,omitempty"`
@@ -20,7 +20,6 @@ func AddUser(user *User) error {
 		return err
 	}
 	if has {
-		helper.Debug("oldUser ---", oldUser)
 		whereData := make([]interface{}, 0)
 		if len(user.Website) > 0 {
 			oldUser.Website = user.Website
@@ -30,6 +29,9 @@ func AddUser(user *User) error {
 		}
 		whereData = append(whereData, oldUser.Name)
 		err = Update(oldUser, "name=?", whereData, "website", "email")
+		user.Id = oldUser.Id
+		user.Website = oldUser.Website
+		user.Email = oldUser.Email
 		return err
 	}
 	return Insert(user)
