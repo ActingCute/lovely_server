@@ -98,3 +98,25 @@ func (this *BaseController) GetPostDataNotStop(data interface{}) {
 	json.Unmarshal(this.Ctx.Input.RequestBody, data)
 	helper.Debug(string(this.Ctx.Input.RequestBody))
 }
+
+func (this *BaseController) NeedAdminLogin() models.Admin {
+	Token := this.Ctx.Input.Header("Authorization")
+	if len(Token) != 32 {
+		this.SetReturnData(helper.PARAMETER_ERROR, "no token", nil)
+		this.Finish()
+		this.StopRun()
+	}
+	admin := models.Admin{Token:Token}
+	has, admin, err := models.GetAdminByToken(admin)
+	if !has {
+		this.SetReturnData(helper.FAILED, "登陆过期", nil)
+		this.Finish()
+		this.StopRun()
+	}
+	if helper.Error(err) {
+		this.SetReturnData(helper.FAILED, err.Error(), err)
+		this.Finish()
+		this.StopRun()
+	}
+	return admin
+}

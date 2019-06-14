@@ -40,6 +40,16 @@ func init() {
 				&controllers.QiniuController{},
 			),
 		),
+		beego.NSNamespace("/admin",
+			beego.NSInclude(
+				&controllers.AdminController{},
+			),
+		),
+		beego.NSNamespace("/twitter",
+			beego.NSInclude(
+				&controllers.TwitterController{},
+			),
+		),
 	)
 	beego.Debug("models.Domain", models.Domain)
 	beego.AddNamespace(ns)

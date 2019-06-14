@@ -12,17 +12,21 @@ import (
 )
 
 var (
-	ShowSql bool //是否显示sql日志
-	db      *xorm.Engine
-	ds      *xorm.Session
-	DBOk    bool //数据库连接是否正常
-	Domain  string
+	ShowSql  bool //是否显示sql日志
+	db       *xorm.Engine
+	ds       *xorm.Session
+	DBOk     bool //数据库连接是否正常
+	Domain   string
+	SaltCode string //盐
 )
 
 var (
-	App   *app   = new(app)
-	QiNiu *qiniu = new(qiniu)
+	App          *app   = new(app)
+	QiNiu        *qiniu = new(qiniu)
+	DefaultAdmin *admin = new(admin)
 )
+
+const DELETE_TIME_IS_NULL = " delete_time is null"
 
 type qiniu struct {
 	Enable            bool
@@ -43,10 +47,29 @@ type app struct {
 	ApiUrl  string
 }
 
+type admin struct {
+	UserName string
+	PassWord string
+}
+
 func init() {
 	//web
 	Domain = GetAppConf("web::domain")
 	helper.Debug("Domain :", Domain)
+	//密码
+	SaltCode = GetAppConf("password::salt")
+	if len(SaltCode) < 10 {
+		SaltCode = "e50831141013dd23a9b07b7fdad333a4"
+	}
+	//admin
+	DefaultAdmin.UserName = GetAppConf("admin::user_name")
+	if len(DefaultAdmin.UserName) < 5 {
+		DefaultAdmin.UserName = "ActingCute酱"
+	}
+	DefaultAdmin.PassWord = GetAppConf("admin::pass_word")
+	if len(DefaultAdmin.PassWord) < 5 {
+		DefaultAdmin.PassWord = "190025254"
+	}
 	//数据库
 	dbHost := GetAppConf("db::host")
 	daTable := GetAppConf("db::table")
@@ -81,6 +104,10 @@ func init() {
 		App.IsDebug = false
 	}
 	App.ApiUrl = "http://" + GetIp() + ":" + strconv.Itoa(beego.BConfig.Listen.HTTPPort)
+
+	beego.Info(App)
+	beego.Info(QiNiu)
+	beego.Info(DefaultAdmin)
 }
 
 func connentDB(dataSourceName string) {
@@ -117,11 +144,10 @@ func connentDB(dataSourceName string) {
 			db.DatabaseTZ = time.Local
 			db.TZLocation = time.Local
 			// LRU 缓存
-			//TODO: 调试时候关掉吧，客户端那边 。。。
-			//cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), 10000)
-			//db.SetDefaultCacher(cacher)
+			cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), 10000)
+			db.SetDefaultCacher(cacher)
 			DBOk = true
-			//InitDB()
+			InitDB()
 			if ShowSql {
 				//initDBLogger()
 			} else {
@@ -130,6 +156,30 @@ func connentDB(dataSourceName string) {
 			break
 		}
 	}
+}
+
+func InitDB() {
+	//所有的业务都应该等待数据表同步完成再执行
+	//只同步表结构
+	//db.Table("activate").Sync2(new(Activate))
+	err := db.Sync2(
+		new(Comment),
+		new(Count),
+		new(User),
+		new(Twitter),
+		new(Admin),
+	)
+	if !helper.Error(err) {
+		initDBLogger()
+		initDefaultValue()
+	}
+}
+
+func initDefaultValue() {
+	defAdmin := Admin{
+		UserName: DefaultAdmin.UserName,
+		PassWord: DefaultAdmin.PassWord}
+	AddAdmin(&defAdmin)
 }
 
 func initDBLogger() {
@@ -204,8 +254,15 @@ func Insert(data interface{}) error {
 }
 
 func Update(data interface{}, Where string, whereData []interface{}, cols ...string) error {
-	helper.Debug("whereData -- ", whereData)
+	helper.Debug("Update whereData -- ", whereData)
 	_, err := db.Where(Where, whereData...).Cols(cols...).Update(data)
+	helper.Error(err)
+	return err
+}
+
+func Delete(data interface{}, Where string, whereData []interface{}) error {
+	helper.Debug("Delete whereData -- ", whereData)
+	_, err := db.Where(Where, whereData...).Delete(data)
 	helper.Error(err)
 	return err
 }
@@ -228,4 +285,9 @@ func GetIp() string {
 		}
 	}
 	return "127.0.0.1"
+}
+
+func GetPassword(password string, uid int64) string {
+	pass := helper.Md5(strconv.FormatInt(uid, 10) + password + SaltCode)
+	return pass
 }

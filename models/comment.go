@@ -24,10 +24,16 @@ const comment_user_cols = "user.id,user.name,user.website,user.email,comment.id,
 
 func GetCommentsByUrl(url string) ([]CommentsExtend, error) {
 	comments := make([]CommentsExtend, 0)
-	err := db.Table("comment").Join("RIGHT", "user", "user.id=comment.user_id").Cols(comment_user_cols).Where("url =?", url).Find(&comments)
+	err := db.Table("comment").Join("RIGHT", "user", "user.id=comment.user_id").Cols(comment_user_cols).Where("url =? and"+DELETE_TIME_IS_NULL, url).Find(&comments)
 	return comments, err
 }
 
 func AddComment(comment *Comment) error {
 	return Insert(comment)
+}
+
+func DeleteComment(comment *Comment) error {
+	var whereData []interface{}
+	whereData = append(whereData, comment.Id)
+	return Delete(comment, "id=?", whereData)
 }

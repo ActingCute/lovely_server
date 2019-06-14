@@ -11,12 +11,63 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 basePath: /v1
 paths:
+  /admin/check_login:
+    get:
+      tags:
+      - admin
+      description: Check Admin Login
+      operationId: AdminController.Check Admin Login
+      responses:
+        "10000":
+          description: '{struct} helper.RestfulReturn'
+        "10001":
+          description: '{struct} helper.RestfulReturn'
+  /admin/login:
+    post:
+      tags:
+      - admin
+      description: Admin Login
+      operationId: AdminController.Admin Login
+      parameters:
+      - in: body
+        name: body
+        description: body for Admin content
+        required: true
+        schema:
+          $ref: '#/definitions/models.Admin'
+      responses:
+        "403":
+          description: body is empty
+        "10000":
+          description: '{struct} helper.RestfulReturn'
+        "10001":
+          description: '{struct} helper.RestfulReturn'
   /comment/add:
     post:
       tags:
       - comment
       description: Add Comment
       operationId: CommentController.Add Comment
+      parameters:
+      - in: body
+        name: body
+        description: body for Comment content
+        required: true
+        schema:
+          $ref: '#/definitions/models.Comment'
+      responses:
+        "403":
+          description: body is empty
+        "10000":
+          description: '{struct} helper.RestfulReturn'
+        "10001":
+          description: '{struct} helper.RestfulReturn'
+  /comment/delete:
+    post:
+      tags:
+      - comment
+      description: Delete Comment
+      operationId: CommentController.Delete Comment
       parameters:
       - in: body
         name: body
@@ -137,48 +188,119 @@ paths:
           description: '{struct} helper.RestfulReturn'
         "10001":
           description: '{struct} helper.RestfulReturn'
+  /twitter/add:
+    post:
+      tags:
+      - twitter
+      description: Add Twitter
+      operationId: TwitterController.Add Twitter
+      parameters:
+      - in: body
+        name: body
+        description: body for Twitter content
+        required: true
+        schema:
+          $ref: '#/definitions/models.Twitter'
+      responses:
+        "403":
+          description: body is empty
+        "10000":
+          description: '{struct} helper.RestfulReturn'
+        "10001":
+          description: '{struct} helper.RestfulReturn'
+  /twitter/delete:
+    post:
+      tags:
+      - twitter
+      description: Delete Twitter
+      operationId: TwitterController.Delete Twitter
+      parameters:
+      - in: body
+        name: body
+        description: body for Twitter content
+        required: true
+        schema:
+          $ref: '#/definitions/models.Twitter'
+      responses:
+        "403":
+          description: body is empty
+        "10000":
+          description: '{struct} helper.RestfulReturn'
+        "10001":
+          description: '{struct} helper.RestfulReturn'
 definitions:
+  models.Admin:
+    title: Admin
+    type: object
+    properties:
+      aid:
+        type: integer
+        format: int64
+      delete_time:
+        type: string
+        format: datetime
+      pass_word:
+        type: string
+      token:
+        type: string
+      user_name:
+        type: string
   models.Comment:
     title: Comment
     type: object
     properties:
-      Content:
+      commid:
+        type: integer
+        format: int64
+      content:
         type: string
-      DeleteTime:
+      delete_time:
         type: string
         format: datetime
-      FatherId:
+      father_id:
         type: integer
         format: int64
-      Id:
+      son_id:
         type: integer
         format: int64
-      SonId:
-        type: integer
-        format: int64
-      UpdateTime:
+      update_time:
         type: string
         format: datetime
-      Url:
+      url:
         type: string
-      UserId:
+      user_id:
         type: integer
         format: int64
   models.Count:
     title: Count
     type: object
     properties:
-      Count:
+      count:
         type: integer
         format: int64
-      DeleteTime:
+      delete_time:
         type: string
         format: datetime
-      Id:
+      id:
         type: integer
         format: int64
-      Url:
+      url:
         type: string
+  models.Twitter:
+    title: Twitter
+    type: object
+    properties:
+      content:
+        type: string
+      delete_time:
+        type: string
+        format: datetime
+      tw_id:
+        type: integer
+        format: int64
+      update_time:
+        type: string
+        format: datetime
 tags:
 - name: count
   description: |
@@ -186,3 +308,9 @@ tags:
 - name: comment
   description: |
     Operations about Comment
+- name: admin
+  description: |
+    Operations about Admin
+- name: twitter
+  description: |
+    Operations about Twitter

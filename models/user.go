@@ -41,3 +41,9 @@ func GetUserByName(name string) (has bool, user User, err error) {
 	has, err = db.Table("user").Where("name =?", name).Get(&user)
 	return
 }
+
+func DeleteUser(user *User) error {
+	var whereData []interface{}
+	whereData = append(whereData, user.Id)
+	return Delete(user, "id=?", whereData)
+}

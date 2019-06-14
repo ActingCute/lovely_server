@@ -9,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"encoding/hex"
+	"crypto/md5"
 )
 
 var (
@@ -97,6 +99,30 @@ func GetToken(size int, kind int) string {
 		}
 		scope, base := kinds[ikind][0], kinds[ikind][1]
 		result[i] = uint8(base + rand.Intn(scope))
+	}
+	return string(result)
+}
+
+func Md5(str string) string {
+
+	if len(str) == 0 {
+		return str
+	}
+
+	md := md5.Sum([]byte(str))
+	mdpw := hex.EncodeToString(md[:])
+	return mdpw
+
+}
+
+//随机字符
+func GetRandomString(strlen int) string {
+	str := "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	bytes := []byte(str)
+	result := []byte{}
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for i := 0; i < strlen; i++ {
+		result = append(result, bytes[r.Intn(len(bytes))])
 	}
 	return string(result)
 }

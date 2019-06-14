@@ -78,3 +78,27 @@ func (this *CommentController) Add() {
 	}
 	this.SetReturnData(code, "love you", err)
 }
+
+// @Title Delete Comment
+// @Description Delete Comment
+// @Param	body		body 	models.Comment	true	"body for Comment content"
+// @Success 10000 {struct} helper.RestfulReturn
+// @Failure 10001 {struct} helper.RestfulReturn
+// @Failure 403 body is empty
+// @router /delete [post]
+func (this *CommentController) Delete() {
+
+	this.NeedAdminLogin()
+
+	var comment models.Comment
+
+	this.GetPostDataNotStop(&comment)
+	this.NeedPostData(comment.Id)
+
+	err := models.DeleteComment(&comment)
+
+	if err != nil {
+		this.SetReturnData(helper.FAILED, err.Error(), nil)
+	}
+	this.SetReturnData(helper.SUCCESS, "love you", nil)
+}

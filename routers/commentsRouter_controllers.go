@@ -7,10 +7,34 @@ import (
 
 func init() {
 
+	beego.GlobalControllerRouter["lovely_server/controllers:AdminController"] = append(beego.GlobalControllerRouter["lovely_server/controllers:AdminController"],
+		beego.ControllerComments{
+			Method: "CheckLogin",
+			Router: `/check_login`,
+			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["lovely_server/controllers:AdminController"] = append(beego.GlobalControllerRouter["lovely_server/controllers:AdminController"],
+		beego.ControllerComments{
+			Method: "Login",
+			Router: `/login`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 	beego.GlobalControllerRouter["lovely_server/controllers:CommentController"] = append(beego.GlobalControllerRouter["lovely_server/controllers:CommentController"],
 		beego.ControllerComments{
 			Method: "Add",
 			Router: `/add`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["lovely_server/controllers:CommentController"] = append(beego.GlobalControllerRouter["lovely_server/controllers:CommentController"],
+		beego.ControllerComments{
+			Method: "Delete",
+			Router: `/delete`,
 			AllowHTTPMethods: []string{"post"},
 			MethodParams: param.Make(),
 			Params: nil})
@@ -60,6 +84,22 @@ func init() {
 			Method: "UptokenWeb",
 			Router: `/uptoken_web`,
 			AllowHTTPMethods: []string{"get"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["lovely_server/controllers:TwitterController"] = append(beego.GlobalControllerRouter["lovely_server/controllers:TwitterController"],
+		beego.ControllerComments{
+			Method: "Add",
+			Router: `/add`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
+	beego.GlobalControllerRouter["lovely_server/controllers:TwitterController"] = append(beego.GlobalControllerRouter["lovely_server/controllers:TwitterController"],
+		beego.ControllerComments{
+			Method: "Delete",
+			Router: `/delete`,
+			AllowHTTPMethods: []string{"post"},
 			MethodParams: param.Make(),
 			Params: nil})
 
