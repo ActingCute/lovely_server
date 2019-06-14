@@ -101,12 +101,13 @@ func (this *BaseController) GetPostDataNotStop(data interface{}) {
 
 func (this *BaseController) NeedAdminLogin() models.Admin {
 	Token := this.Ctx.Input.Header("Authorization")
+	helper.Debug("Token :", Token)
 	if len(Token) != 32 {
 		this.SetReturnData(helper.PARAMETER_ERROR, "no token", nil)
 		this.Finish()
 		this.StopRun()
 	}
-	admin := models.Admin{Token:Token}
+	admin := models.Admin{Token: Token}
 	has, admin, err := models.GetAdminByToken(admin)
 	if !has {
 		this.SetReturnData(helper.FAILED, "登陆过期", nil)

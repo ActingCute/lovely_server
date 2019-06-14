@@ -26,11 +26,11 @@ func (this *AdminController) Login() {
 	has, admin, err := models.CkeckAdmin(admin)
 
 	if helper.Error(err) {
-		this.SetReturnData(helper.FAILED, "login fail", err.Error())
+		this.SetReturnData(helper.FAILED, err.Error(), err)
 		return
 	}
 	if !has {
-		this.SetReturnData(helper.FAILED, "pass_word error", nil)
+		this.SetReturnData(helper.FAILED, admin.UserName + " not exist", nil)
 		return
 	}
 	this.SetReturnData(helper.SUCCESS, "login ok", admin)
@@ -43,11 +43,8 @@ func (this *AdminController) Login() {
 // @Failure 10001 {struct} helper.RestfulReturn
 // @router /check_login [get]
 func (this *AdminController) CheckLogin() {
-	var admin models.Admin
 
-	this.GetPostDataNotStop(&admin)
-	this.NeedPostData(admin.UserName, admin.PassWord)
-	admin = this.NeedAdminLogin()
+	admin := this.NeedAdminLogin()
 
 	this.SetReturnData(helper.SUCCESS, "login ok", admin)
 }
