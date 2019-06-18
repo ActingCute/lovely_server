@@ -363,7 +363,11 @@
                 },
                 "delete_time": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "string"
+                },
+                "last_login": {
+                    "type": "string",
+                    "format": "string"
                 },
                 "pass_word": {
                     "type": "string"
@@ -389,7 +393,7 @@
                 },
                 "delete_time": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "string"
                 },
                 "father_id": {
                     "type": "integer",
@@ -401,7 +405,7 @@
                 },
                 "update_time": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "string"
                 },
                 "url": {
                     "type": "string"
@@ -422,7 +426,7 @@
                 },
                 "delete_time": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "string"
                 },
                 "id": {
                     "type": "integer",
@@ -442,7 +446,7 @@
                 },
                 "delete_time": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "string"
                 },
                 "tw_id": {
                     "type": "integer",
@@ -450,7 +454,7 @@
                 },
                 "update_time": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "string"
                 }
             }
         }

@@ -238,7 +238,10 @@ definitions:
         format: int64
       delete_time:
         type: string
-        format: datetime
+        format: string
+      last_login:
+        type: string
+        format: string
       pass_word:
         type: string
       token:
@@ -256,7 +259,7 @@ definitions:
         type: string
       delete_time:
         type: string
-        format: datetime
+        format: string
       father_id:
         type: integer
         format: int64
@@ -265,7 +268,7 @@ definitions:
         format: int64
       update_time:
         type: string
-        format: datetime
+        format: string
       url:
         type: string
       user_id:
@@ -280,7 +283,7 @@ definitions:
         format: int64
       delete_time:
         type: string
-        format: datetime
+        format: string
       id:
         type: integer
         format: int64
@@ -294,13 +297,13 @@ definitions:
         type: string
       delete_time:
         type: string
-        format: datetime
+        format: string
       tw_id:
         type: integer
         format: int64
       update_time:
         type: string
-        format: datetime
+        format: string
 tags:
 - name: count
   description: |

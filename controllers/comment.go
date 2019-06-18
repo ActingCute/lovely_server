@@ -28,7 +28,7 @@ func (this *CommentController) Get() {
 
 	comments, err := models.GetCommentsByUrl(comment.Url)
 
-	if err != nil {
+	if helper.Error(err) {
 		code = helper.FAILED
 	}
 	this.SetReturnData(code, "love you", comments)
