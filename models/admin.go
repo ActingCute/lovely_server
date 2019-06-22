@@ -1,9 +1,9 @@
 package models
 
 import (
-	"time"
-	"lovely_server/helper"
 	"github.com/pkg/errors"
+	"lovely_server/helper"
+	"time"
 )
 
 type Admin struct {
@@ -51,7 +51,7 @@ func CkeckAdmin(admin Admin) (has bool, Admin Admin, err error) {
 		Admin.Token = helper.GetRandomString(32)
 		var whereData []interface{}
 		whereData = append(whereData, Admin.Id)
-		err = Update(Admin, "id=?", whereData, "token")
+		err = Update(Admin, "id=?", whereData, "token", "last_login")
 		Admin.PassWord = ""
 	} else {
 		err = errors.New("pass_word error")

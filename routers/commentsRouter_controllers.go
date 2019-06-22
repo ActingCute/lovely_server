@@ -103,4 +103,12 @@ func init() {
 			MethodParams: param.Make(),
 			Params: nil})
 
+	beego.GlobalControllerRouter["lovely_server/controllers:TwitterController"] = append(beego.GlobalControllerRouter["lovely_server/controllers:TwitterController"],
+		beego.ControllerComments{
+			Method: "Get",
+			Router: `/get`,
+			AllowHTTPMethods: []string{"post"},
+			MethodParams: param.Make(),
+			Params: nil})
+
 }

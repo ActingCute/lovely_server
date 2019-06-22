@@ -12,6 +12,11 @@ type BaseController struct {
 	beego.Controller
 }
 
+type Page struct {
+	Per int `json:"per"`
+	Cur int `json:"cur"`
+}
+
 func (this *BaseController) Prepare() {
 	helper.Debug("好无聊喔~", models.Domain)
 	this.NeedSQLConnentSuccess()
