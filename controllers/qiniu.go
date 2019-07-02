@@ -114,7 +114,7 @@ func (this *QiniuController) UptokenKey() {
 	// }
 
 	resultData["key"] = key
-	resultData["token"] = NewUptokenWithKey(models.QiNiu.Space, key, 3600*24) // 3600是一小时。
+	resultData["token"] = UptokenWithKey(models.QiNiu.Space, key, 3600*24) // 3600是一小时。
 	resultData["action"] = models.QiNiu.Action
 
 	this.SetReturnData(helper.SUCCESS, "ok", resultData)
