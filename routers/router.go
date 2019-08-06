@@ -15,6 +15,8 @@ import (
 )
 
 func init() {
+	// API
+	beego.AutoRouter(&controllers.ApiController{})
 	ns := beego.NewNamespace("/v1",
 		// beego.NSNamespace("/api",
 		// 	beego.NSInclude(

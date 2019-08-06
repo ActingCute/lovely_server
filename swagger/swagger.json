@@ -350,9 +350,44 @@
                     }
                 }
             }
+        },
+        "/twitter/get": {
+            "post": {
+                "tags": [
+                    "twitter"
+                ],
+                "description": "Get Twitter",
+                "operationId": "TwitterController.Get Twitter",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "body for Twitter content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Page"
+                        }
+                    }
+                ],
+                "responses": {
+                    "10000": {
+                        "description": "{struct} helper.RestfulReturn"
+                    },
+                    "10001": {
+                        "description": "{struct} helper.RestfulReturn"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "Page": {
+            "title": "Page",
+            "type": "object"
+        },
         "models.Admin": {
             "title": "Admin",
             "type": "object",
@@ -363,11 +398,11 @@
                 },
                 "delete_time": {
                     "type": "string",
-                    "format": "string"
+                    "format": "datetime"
                 },
                 "last_login": {
                     "type": "string",
-                    "format": "string"
+                    "format": "datetime"
                 },
                 "pass_word": {
                     "type": "string"
@@ -393,7 +428,7 @@
                 },
                 "delete_time": {
                     "type": "string",
-                    "format": "string"
+                    "format": "datetime"
                 },
                 "father_id": {
                     "type": "integer",
@@ -405,7 +440,7 @@
                 },
                 "update_time": {
                     "type": "string",
-                    "format": "string"
+                    "format": "datetime"
                 },
                 "url": {
                     "type": "string"
@@ -426,7 +461,7 @@
                 },
                 "delete_time": {
                     "type": "string",
-                    "format": "string"
+                    "format": "datetime"
                 },
                 "id": {
                     "type": "integer",
@@ -446,7 +481,7 @@
                 },
                 "delete_time": {
                     "type": "string",
-                    "format": "string"
+                    "format": "datetime"
                 },
                 "tw_id": {
                     "type": "integer",
@@ -454,7 +489,7 @@
                 },
                 "update_time": {
                     "type": "string",
-                    "format": "string"
+                    "format": "datetime"
                 }
             }
         }

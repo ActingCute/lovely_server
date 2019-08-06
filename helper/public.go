@@ -15,6 +15,8 @@ import (
 
 var (
 	IsDebug = GetBool(GetAppConf("IsDebug"))
+	TimeZone = "Asia/Chongqing"
+	Layout = "2006-01-02 15:04:05"
 )
 
 //error
@@ -125,4 +127,18 @@ func GetRandomString(strlen int) string {
 		result = append(result, bytes[r.Intn(len(bytes))])
 	}
 	return string(result)
+}
+
+//string时间戳转化int64
+func StringDateFormatInt(t string, layout ...string) (unix_time int64) {
+	beego.Info("StringDateFormatInt = ", t)
+	layoutstr := Layout
+	if len(layout) > 0 {
+		layoutstr = layout[0]
+	}
+	datetime, err := time.Parse(layoutstr, t)
+	if Error(err) {
+		return 0
+	}
+	return datetime.Unix()
 }

@@ -4,7 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
-	helper "lovely_server/helper"
+	"lovely_server/helper"
 	"net"
 	"os"
 	"strconv"
@@ -45,6 +45,7 @@ type app struct {
 	Runmode string
 	IsDebug bool
 	ApiUrl  string
+	RunTime int64
 }
 
 type admin struct {
@@ -61,6 +62,7 @@ func init() {
 	if len(SaltCode) < 10 {
 		SaltCode = "e50831141013dd23a9b07b7fdad333a4"
 	}
+
 	//admin
 	DefaultAdmin.UserName = GetAppConf("admin::user_name")
 	if len(DefaultAdmin.UserName) < 5 {
@@ -104,7 +106,11 @@ func init() {
 		App.IsDebug = false
 	}
 	App.ApiUrl = "http://" + GetIp() + ":" + strconv.Itoa(beego.BConfig.Listen.HTTPPort)
-
+	RunTime := helper.StringDateFormatInt(beego.AppConfig.String("runtime"))
+	if RunTime == 0 {
+		RunTime = time.Now().Unix()
+	}
+	App.RunTime = RunTime
 	beego.Info(App)
 	beego.Info(QiNiu)
 	beego.Info(DefaultAdmin)
@@ -177,8 +183,9 @@ func InitDB() {
 
 func initDefaultValue() {
 	defAdmin := Admin{
-		UserName: DefaultAdmin.UserName,
-		PassWord: DefaultAdmin.PassWord}
+		LastLogin: time.Now(),
+		UserName:  DefaultAdmin.UserName,
+		PassWord:  DefaultAdmin.PassWord}
 	AddAdmin(&defAdmin)
 }
 

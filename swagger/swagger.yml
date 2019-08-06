@@ -228,7 +228,30 @@ paths:
           description: '{struct} helper.RestfulReturn'
         "10001":
           description: '{struct} helper.RestfulReturn'
+  /twitter/get:
+    post:
+      tags:
+      - twitter
+      description: Get Twitter
+      operationId: TwitterController.Get Twitter
+      parameters:
+      - in: body
+        name: body
+        description: body for Twitter content
+        required: true
+        schema:
+          $ref: '#/definitions/Page'
+      responses:
+        "403":
+          description: body is empty
+        "10000":
+          description: '{struct} helper.RestfulReturn'
+        "10001":
+          description: '{struct} helper.RestfulReturn'
 definitions:
+  Page:
+    title: Page
+    type: object
   models.Admin:
     title: Admin
     type: object
@@ -238,10 +261,10 @@ definitions:
         format: int64
       delete_time:
         type: string
-        format: string
+        format: datetime
       last_login:
         type: string
-        format: string
+        format: datetime
       pass_word:
         type: string
       token:
@@ -259,7 +282,7 @@ definitions:
         type: string
       delete_time:
         type: string
-        format: string
+        format: datetime
       father_id:
         type: integer
         format: int64
@@ -268,7 +291,7 @@ definitions:
         format: int64
       update_time:
         type: string
-        format: string
+        format: datetime
       url:
         type: string
       user_id:
@@ -283,7 +306,7 @@ definitions:
         format: int64
       delete_time:
         type: string
-        format: string
+        format: datetime
       id:
         type: integer
         format: int64
@@ -297,13 +320,13 @@ definitions:
         type: string
       delete_time:
         type: string
-        format: string
+        format: datetime
       tw_id:
         type: integer
         format: int64
       update_time:
         type: string
-        format: string
+        format: datetime
 tags:
 - name: count
   description: |
