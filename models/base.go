@@ -150,8 +150,8 @@ func connentDB(dataSourceName string) {
 			db.DatabaseTZ = time.Local
 			db.TZLocation = time.Local
 			// LRU 缓存
-			cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), 10000)
-			db.SetDefaultCacher(cacher)
+			//cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), 10000)
+			//db.SetDefaultCacher(cacher)
 			DBOk = true
 			InitDB()
 			if ShowSql {

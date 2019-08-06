@@ -23,7 +23,7 @@ func DeleteTwitter(Twitter *Twitter) error {
 }
 
 func GetTwitterLimit(limit int, start ...int) (list []Twitter, count int64, err error) {
-	err = db.Table("twitter").Where(DELETE_TIME_IS_NULL).Limit(limit, start...).Find(&list)
+	err = db.Table("twitter").Where(DELETE_TIME_IS_NULL).Desc("id").Limit(limit, start...).Find(&list)
 	if !helper.Error(err) {
 		count, err = db.Table("twitter").Where(DELETE_TIME_IS_NULL).Count(new(Twitter))
 	}
