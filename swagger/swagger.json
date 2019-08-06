@@ -365,7 +365,7 @@
                         "description": "body for Twitter content",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Page"
+                            "$ref": "#/definitions/.Page"
                         }
                     }
                 ],
@@ -384,8 +384,7 @@
         }
     },
     "definitions": {
-        "Page": {
-            "title": "Page",
+        ".Page": {
             "type": "object"
         },
         "models.Admin": {
@@ -398,11 +397,11 @@
                 },
                 "delete_time": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "string"
                 },
                 "last_login": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "string"
                 },
                 "pass_word": {
                     "type": "string"
@@ -428,7 +427,7 @@
                 },
                 "delete_time": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "string"
                 },
                 "father_id": {
                     "type": "integer",
@@ -440,7 +439,7 @@
                 },
                 "update_time": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "string"
                 },
                 "url": {
                     "type": "string"
@@ -461,7 +460,7 @@
                 },
                 "delete_time": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "string"
                 },
                 "id": {
                     "type": "integer",
@@ -481,7 +480,7 @@
                 },
                 "delete_time": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "string"
                 },
                 "tw_id": {
                     "type": "integer",
@@ -489,7 +488,7 @@
                 },
                 "update_time": {
                     "type": "string",
-                    "format": "datetime"
+                    "format": "string"
                 }
             }
         }
