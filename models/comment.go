@@ -24,7 +24,7 @@ const comment_user_cols = "user.id,user.name,user.website,user.email,comment.id,
 
 func GetCommentsByUrl(url string) ([]CommentsExtend, error) {
 	comments := make([]CommentsExtend, 0)
-	err := db.Table("comment").Join("RIGHT", "user", "user.id=comment.user_id").Cols(comment_user_cols).Where("url =? and comment.delete_time is null", url).Find(&comments)
+	err := db.Table("comment").Join("RIGHT", "user", "user.id=comment.user_id").Cols(comment_user_cols).Desc("comment.id").Where("url =? and comment.delete_time is null", url).Find(&comments)
 	return comments, err
 }
 
