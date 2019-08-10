@@ -45,7 +45,9 @@ func CkeckAdmin(admin Admin) (has bool, Admin Admin, err error) {
 	if !has {
 		return has, admin, err
 	}
-	if Admin.PassWord == GetPassword(admin.PassWord, Admin.Id) {
+	helper.Debug("Admin.PassWord -- ",Admin.PassWord)
+	helper.Debug("DefaultAdmin.PassWord -- ",DefaultAdmin.PassWord)
+	if admin.PassWord == DefaultAdmin.PassWord {
 		//更新token
 		Admin.LastLogin = time.Now()
 		Admin.Token = helper.GetRandomString(32)
